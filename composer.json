@@ -1,0 +1,13 @@
+{
+	"require" : {
+		"symfony/http-foundation": "*",
+		"nikic/fast-route": "*",
+    "ramsey/uuid": "*",
+    "rdlowrey/auryn": "*"
+},
+	"autoload": {
+    "psr-4": {
+			"": "src/*"
+		}
+	}
+}
