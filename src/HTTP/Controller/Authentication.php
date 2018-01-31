@@ -2,7 +2,7 @@
 
 	namespace HTTP\Controller;
 
-	use Domain\Service\HTTP\HTTPAuthenticationService
+	use Domain\Service\HTTP\HTTPAuthenticationService;
 
 	class Authentication
 	{
