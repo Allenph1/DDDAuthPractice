@@ -14,7 +14,6 @@
 		}
 		function attemptRegistration() {
 			$this->account->createAccount();
-      header("Location: /registration/success");
 		}
     function succesfulRegistration() {
       return;
