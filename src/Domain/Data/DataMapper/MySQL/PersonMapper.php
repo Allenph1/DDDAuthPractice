@@ -5,12 +5,13 @@
 	use \Domain\Aggregate\Person\Person;
 	use \Domain\Component\MySQLDataMapper;
 	use \Domain\Interface\Data\DataMapper\PersonDataMapper;
+	use \Domain\Interface\Data\Factory\PersonFactory;
 
 	class PersonMapper extends DataMapper implements PersonDataMapper
 	{
 		private $connection;
 		private $table;
-		function __construct(PDO $connection, String $table, Factory $factory) {
+		function __construct(PDO $connection, String $table, PersonFactory $factory) {
 			$this->connection = $connection;
 			$this->table = $table;
 			$this->factory = $factory;

@@ -4,12 +4,15 @@
 
 	use Domain\Service\HTTP\HTTPAuthenticationService;
 
-	class AuthenticationController
+	class Authentication
 	{
 		function __construct(HTTPAuthenticationService $authenticationService) {
 			$this->authenticationService = $authenticationService;
 		}
-		function login() {
+		function loginForm() {
+			return;
+		}
+		function attemptLogin() {
 			$this->authenticationService->login();
 		}
 		function logout() {

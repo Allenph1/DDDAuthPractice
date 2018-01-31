@@ -5,12 +5,13 @@
 	use \Domain\Aggregate\Account\Account;
 	use \Domain\Component\MySQLDataMapper;
 	use \Domain\Interface\Data\DataMapper\AccountDataMapper;
+	use \Domain\Interface\Data\Factory\AccountFactory;
 
 	class AccountMapper extends DataMapper implements AccountDataMapper
 	{
 		private $connection;
 		private $table;
-		function __construct(PDO $connection, String $table, Factory $factory) {
+		function __construct(PDO $connection, String $table, AccountFactory $factory) {
 			$this->connection = $connection;
 			$this->table = $table;
 			$this->factory = $factory;

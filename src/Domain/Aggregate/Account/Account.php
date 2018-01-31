@@ -11,7 +11,7 @@
 		private $username;
 		private $passwordHash;
 		private $creationDate;
-		function __construct(Int $id, Int $ownerPersonId, String $username, PasswordHash $passwordHash, DateTime $creationDate) {
+		function __construct(String $id, Int $ownerPersonId, String $username, PasswordHash $passwordHash, DateTime $creationDate) {
 			$this->id = $id;
 			$this->ownerPersonId = $ownerPersonId;
 			$this->creationDate = $creationDate;

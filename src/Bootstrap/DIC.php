@@ -1,5 +1,7 @@
 <?php
 
+	use Symfony\Component\HttpFoundation\Request;
+
 	$injector = new Auryn\Injector;
 
 	/////////////////////////
@@ -7,12 +9,12 @@
 	/////////////////////////
 
 	$pdo = new PDO(
-		"mysql:dbname=;host=",
-		"",
-		""
+		"mysql:dbname=ahundley_800contacts_dev;host=db.inetz.com",
+		"800contacts_dev",
+		"Ghaunrow-ojDyag6"
 	);
-	$request = Symfony\Component\HttpFoundation\Request::createFromGlobals();
-
+	$request = Request::createFromGlobals();
+	
 	////////////////////////////////////
 	// Aggregate Agnostic Definitions //
 	////////////////////////////////////
@@ -29,6 +31,15 @@
 	// DataMappers
 
 	// Factories
+
+	// Misc.
+	$injector->alias("Twig_LoaderInterface", "Twig_Loader_Filesystem");
+	$injector->define("Twig_Loader_Filesystem", [
+		'../src/HTTP/View/Template'
+	]);
+	$injector->define("Twig_Environment", [
+		"Twig_LoaderInterface" => "Twig\Loader\FilesystemLoader"
+	]);
 
 	///////////////////////////////////
 	// Account Aggregate Definitions //

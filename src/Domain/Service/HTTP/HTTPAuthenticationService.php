@@ -1,10 +1,10 @@
 <?php
 
-	namespace Domain\Service;
+	namespace Domain\Service\HTTP;
 
 	use Symfony\Component\HttpFoundation\Request;
-	use \Domain\Repository\AccountRepository;
-	use \Domain\Repository\PersonRepository;
+	use \Domain\Data\Repository\AccountRepository;
+	use \Domain\Data\Repository\PersonRepository;
 
 	class HTTPAuthenticationService
 	{
@@ -14,8 +14,9 @@
 			$this->personRepository = $personRepository;
 		}
 		function login() {
-			$account = $this->accountRepository->getByUsername($this->request->userame);
-			if ($account->password->verify($this->request->password)) {
+			print_r($this->request->request->get("username"));
+			$account = $this->accountRepository->getByUsername($this->request->request->get("username"));
+			if ($account->password->verify($this->request->request->password)) {
 				$_SESSION['accountId'] = $account->id;
 				echo "LOGGED IN!";
 			}

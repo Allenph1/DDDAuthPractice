@@ -1,11 +1,14 @@
 <?php
 
+	global $injector;
+
 	$dispatcher = \FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $router) {
 
 		// Authentication Routes
-		$router->addRoute('GET', '/login', 'HTTP\Controller\AuthenticationController/login');
-		$router->addRoute('GET', '/logout', 'HTTP\Controller\AuthenticationController/logout');
-
+		$router->addRoute('GET', '/login', 'Authentication/loginForm');
+		$router->addRoute('POST', '/login', 'Authentication/attemptLogin');
+		$router->addRoute('GET', '/logout', 'Authentication/logout');
+		
 		// Account Routes
 
 	});
@@ -34,6 +37,11 @@
 		case FastRoute\Dispatcher::FOUND:
 				$handler = $routeInfo[1];
 				list($class, $method) = explode("/", $handler, 2);
-				$injector->make($class)->$method();
+
+				$controllerClass = 'HTTP\Controller\\' . $class;
+				$injector->make($controllerClass)->$method();
+
+				$viewClass = 'HTTP\View\\' . $class;
+				$injector->make($viewClass)->$method()->send();
 				break;
 	}

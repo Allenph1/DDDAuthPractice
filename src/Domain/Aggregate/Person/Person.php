@@ -8,7 +8,7 @@
 		private $firstName;
 		private $lastName;
 		private $creationDate;
-		function __construct(Int $id, String $firstName, String $lastName, DateTime $creationDate) {
+		function __construct(String $id, String $firstName, String $lastName, DateTime $creationDate) {
 			$this->id = $id;
 			$this->setFirstName($firstName);
 			$this->setLastName($lastName);

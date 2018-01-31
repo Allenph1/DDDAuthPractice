@@ -2,7 +2,7 @@
 
 	namespace HTTP\Controller;
 
-	class IndexController
+	class Index
 	{
 		function get() {
 			echo "TEST";
