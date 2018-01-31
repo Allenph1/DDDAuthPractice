@@ -14,7 +14,6 @@
 		}
 		function attemptLogin() {
 			$this->authenticationService->login();
-			header("Location: login/success");
 		}
 		function loginSuccess() {
 			return;
