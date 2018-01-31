@@ -2,17 +2,20 @@
 
   namespace Domain\Data\Repository;
 
-  use \Domain\Component\Repository;
+  use Domain\Contract\Data\DataMapper\PersonDataMapper;
+  use Domain\Aggregate\Person\Person;
 
-  class PersonRepository extends Repository
+  class PersonRepository
   {
+    private $idCache = [];
+    function __construct(PersonDataMapper $dataMapper) {
+      $this->dataMapper = $dataMapper;
+    }
 		function insert(Person $person) {
 			$this->dataMapper->insert($person);
 		}
-    function getById(Int $id) {
-      $person = $this->factory->create(
-        $this->dataMapper->getById($id)
-      );
+    function getById(String $id) {
+      $person = $this->dataMapper->getById($id);
       $this->idCache[$person->id] = $person;
       return $person;
     }

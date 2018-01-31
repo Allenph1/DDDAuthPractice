@@ -11,12 +11,12 @@
 		private $username;
 		private $passwordHash;
 		private $creationDate;
-		function __construct(String $id, Int $ownerPersonId, String $username, PasswordHash $passwordHash, DateTime $creationDate) {
+		function __construct(String $id, String $ownerPersonId, String $username, PasswordHash $passwordHash, \DateTime $creationDate) {
 			$this->id = $id;
 			$this->ownerPersonId = $ownerPersonId;
+			$this->passwordHash = $passwordHash;
 			$this->creationDate = $creationDate;
 			$this->setUsername($username);
-			$this->setPassword($passwordHash);
 		}
 		function getId() {
 			return $this->id;

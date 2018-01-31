@@ -4,11 +4,12 @@
 
 
 	use Symfony\Component\HttpFoundation\Request;
-	use \Domain\Data\Repository\AccountRepository;
-	use \Domain\Data\Repository\PersonRepository;
-	use \Domain\Aggregate\Account\Account;
+	use Domain\Data\Repository\AccountRepository;
+	use Domain\Data\Repository\PersonRepository;
+	use Domain\Aggregate\Account\Account;
 	use Domain\Aggregate\Account\PasswordHash;
-	use \Domain\Aggregate\Person\Person;
+	use Domain\Aggregate\Person\Person;
+	use Ramsey\Uuid\Uuid;
 
 	class HTTPAccountService
 	{
@@ -24,15 +25,16 @@
 				Uuid::uuid1(),
 				$this->request->request->get('firstName'),
 				$this->request->request->get('lastName'),
-				new DateTime()
+				new \DateTime()
 			);
+			$passwordHash = new PasswordHash();
+			$passwordHash->setPassword($this->request->request->get("password"));
 			$account = new Account(
 				Uuid::uuid1(),
 				$person->getId(),
 				$this->request->request->get('username'),
-				$this->request->request->get('lastName'),
-				new PasswordHash()->setPassword($this->request->request->get("password")),
-				new DateTime()
+				$passwordHash,
+				new \DateTime()
 			);
 			$this->repositories->person->insert($person);
 			$this->repositories->account->insert($account);

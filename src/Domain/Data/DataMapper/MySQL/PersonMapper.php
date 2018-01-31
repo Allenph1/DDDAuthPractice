@@ -2,18 +2,17 @@
 
 	namespace Domain\Data\DataMapper\MySQL;
 
-	use \Domain\Aggregate\Person\Person;
-	use \Domain\Component\MySQLDataMapper;
-	use \Domain\Interface\Data\DataMapper\PersonDataMapper;
-	use \Domain\Interface\Data\Factory\PersonFactory;
+	use Domain\Aggregate\Person\Person;
+	use Domain\Component\MySQLDataMapper;
+	use Domain\Contract\Data\DataMapper\PersonDataMapper;
+	use Domain\Contract\Data\Factory\PersonFactory;
 
-	class PersonMapper extends DataMapper implements PersonDataMapper
+	class PersonMapper implements PersonDataMapper
 	{
 		private $connection;
-		private $table;
-		function __construct(PDO $connection, String $table, PersonFactory $factory) {
+		private $table = "person";
+		function __construct(\PDO $connection, PersonFactory $factory) {
 			$this->connection = $connection;
-			$this->table = $table;
 			$this->factory = $factory;
 		}
 		function insert(Person $person) {
@@ -26,15 +25,15 @@
 			$statement->bindValue(":id", $person->getId());
 			$statement->bindValue(":firstName", $person->getFirstName());
 			$statement->bindValue(":lastName", $person->getlastName());
-			$statement->bindValue(":creationDate", $person->getCreationDate());
+			$statement->bindValue(":creationDate", $person->getCreationDate()->format("Y-m-d H:i:s"));
 			$statement->execute();
 		}
-		function getById(Int $id) {
+		function getById(String $id) {
 			$sql = "SELECT * FROM {$this->getTable()} WHERE id = :id";
 			$statement = $this->getConnection()->prepare($sql);
 			$statement->bindValue(":id", $id);
 			$statement->execute;
-			$data = $statement->fetch(PDO::FETCH_ASSOC);
+			$data = $statement->fetch(\PDO::FETCH_ASSOC);
 			if ($data) {
 				return $this->getFactory()->create($data);
 			}
@@ -48,7 +47,7 @@
 			$statement = $this->getConnection()->prepare($sql);
 			$statement->bindValue(":firstName", $person->getFirstName());
 			$statement->bindValue(":lastName", $person->getLastName());
-			$statement->bindValue(":creationDate", $person->getCreationDate());
+			$statement->bindValue(":creationDate", $person->getCreationDate()->format("Y-m-d H:i:s"));
 			$statement->bindValue(":id", $person->getId());
 			$statement->execute();
 		}

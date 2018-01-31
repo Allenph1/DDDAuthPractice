@@ -1,31 +1,19 @@
 <?php
 
-	use Symfony\Component\HttpFoundation\Request;
-
 	$injector = new Auryn\Injector;
 
 	/////////////////////////
 	// Global Dependencies //
 	/////////////////////////
 
-	$pdo = new PDO(
-		"mysql:dbname=;host=",
-		"username",
-		"password"
-	);
-	$request = Request::createFromGlobals();
+	$request = Symfony\Component\HttpFoundation\Request::createFromGlobals();
 
 	////////////////////////////////////
 	// Aggregate Agnostic Definitions //
 	////////////////////////////////////
 
 	// Services
-	$injector->define('Domain\Service\HTTPAuthenticationService', [
-		'Symfony\Component\HttpFoundation\Request' => $request
-	]);
-	$injector->define('Domain\Service\HTTPAccountService', [
-		'Symfony\Component\HttpFoundation\Request' => $request
-	]);
+
 	// Repository
 
 	// DataMappers
@@ -40,6 +28,19 @@
 	$injector->define("Twig_Environment", [
 		"Twig_LoaderInterface" => "Twig\Loader\FilesystemLoader"
 	]);
+	$injector->define('PDO', [
+    'mysql:dbname=authentication;host=localhost',
+	  'user',
+    'password'
+	]);
+	$injector->define("Symfony\Component\HttpFoundation\Request", [
+		$_GET,
+    $_POST,
+    array(),
+    $_COOKIE,
+    $_FILES,
+    $_SERVER
+	]);
 
 	///////////////////////////////////
 	// Account Aggregate Definitions //
@@ -48,15 +49,11 @@
 	// Services
 
 	// Repository
-	$injector->define('Domain\Data\Repository\AccountRepository', [
-		'Domain\Component\DataMapper' => "Domain\Data\DataMapper\MySQL\AccountMapper"
-	]);
+
 	// Data Mappers
-	$injector->define('Domain\Data\DataMapper\MySQL\AccountMapper', [
-		'PDO' => $pdo,
-		"Domain\Interface\Data\Factory\AccountFactory" => "Domain\Data\Factory\MySQL\MySQLAccountFactory",
-	]);
+	$injector->alias('Domain\Contract\Data\DataMapper\AccountDataMapper', 'Domain\Data\DataMapper\MySQL\AccountMapper');
 	// Factories
+	$injector->alias("Domain\Contract\Data\Factory\AccountFactory", "Domain\Data\Factory\MySQL\MySQLAccountFactory");
 
 	//////////////////////////////////
 	// Person Aggregate Definitions //
@@ -65,12 +62,8 @@
 	// Services
 
 	// Repository
-	$injector->define('Domain\Data\Repository\PersonRepository', [
-		'Domain\Component\DataMapper' => "Domain\Data\DataMapper\MySQL\PersonMapper"
-	]);
+
 	// Data Mappers
-	$injector->define('Domain\Data\DataMapper\MySQL\PersonMapper', [
-		'PDO' => $pdo,
-		"Domain\Interface\Data\Factory\PersonFactory" => "Domain\Data\Factory\MySQL\MySQLPersonFactory",
-	]);
+	$injector->alias('Domain\Contract\Data\DataMapper\PersonDataMapper', 'Domain\Data\DataMapper\MySQL\PersonMapper');
 	// Factories
+	$injector->alias("Domain\Contract\Data\Factory\PersonFactory", "Domain\Data\Factory\MySQL\MySQLPersonFactory");

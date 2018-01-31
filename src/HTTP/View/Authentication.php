@@ -12,15 +12,18 @@
 			$this->engine = $engine;
 		}
 		function loginForm() {
-			$this->response->setContent($this->engine->render('login.html'));
+			$this->response->setContent($this->engine->render('Authentication/Login.html'));
 			return $this->response;
 		}
 		function attemptLogin() {
-			$this->response->setContent($this->engine->render('login.html'));
 			return $this->response;
 		}
-		function loginAttempt() {
-			$this->response->setContent();
+		function loginSuccess() {
+			$this->response->setContent($this->engine->render("Authentication/LoginSuccess.html"));
+			return $this->response;
+		}
+		function logout() {
+			$this->response->setContent($this->engine->render("Authentication/Logout.html"));
 			return $this->response;
 		}
 	}

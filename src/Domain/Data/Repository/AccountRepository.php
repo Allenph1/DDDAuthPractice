@@ -2,24 +2,25 @@
 
   namespace Domain\Data\Repository;
 
-  use \Domain\Component\Repository;
+  use Domain\Contract\Data\DataMapper\AccountDataMapper;
+  use Domain\Aggregate\Account\Account;
 
-  class AccountRepository extends Repository
+  class AccountRepository
   {
+    private $idCache = [];
+    function __construct(AccountDataMapper $dataMapper) {
+      $this->dataMapper = $dataMapper;
+    }
     function insert(Account $account) {
       $this->dataMapper->insert($account);
     }
-    function getByPersonId(Int $personId) {
-      $account = $this->factory->create(
-        $this->dataMapper->getByPostId($personId)
-      );
-      $this->idCache[$account->id] = $account;
+    function getByPersonId(String $personId) {
+      $account = $this->dataMapper->getByPostId($personId);
+      $this->idCache[] = $account;
       return $account;
     }
     function getByUsername(String $username) {
-      return $account = $this->factory->create(
-        $this->dataMapper->getByUsername($username)
-      );
+      return $this->dataMapper->getByUsername($username);
     }
     function update(Account $account) {
       $this->dataMapper->update($account);

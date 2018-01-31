@@ -4,16 +4,18 @@
 
 	use Domain\Aggregate\Account\Account;
   use Domain\Aggregate\Account\PasswordHash;
-	use Domain\Interface\Data\Factory\AccountFactory;
+	use Domain\Contract\Data\Factory\AccountFactory;
 
 	class MySQLAccountFactory implements AccountFactory {
 		function create(Array $row) {
+			$passwordHash = new PasswordHash();
+			$passwordHash->setHash($row['passwordHash']);
 			return new Account(
-				(Int) $row['id'],
+				(String) $row['id'],
 				(Int) $row['ownerPersonId'],
 				(String) $row['username'],
-				new PasswordHash()->setHash($row['passwordHash']),
-				new DateTime($row['creationDate'])
+				$passwordHash,
+				new \DateTime($row['creationDate'])
 			);
 		}
 		function createCollection(Array $rows) {

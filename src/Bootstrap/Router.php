@@ -8,8 +8,12 @@
 		$router->addRoute('GET', '/login', 'Authentication/loginForm');
 		$router->addRoute('POST', '/login', 'Authentication/attemptLogin');
 		$router->addRoute('GET', '/logout', 'Authentication/logout');
-		
+		$router->addRoute('GET', '/login/success', 'Authentication/loginSuccess');
+
 		// Account Routes
+		$router->addRoute('GET', '/register', 'Account/registerForm');
+		$router->addRoute('POST', '/register', 'Account/attemptRegistration');
+		$router->addRoute('GET', '/register/success', 'Account/succesfulRegistration');
 
 	});
 

@@ -1,6 +1,6 @@
 {
 	"require" : {
-		"symfony/http-foundation": "^4.0",
+		"symfony/http-foundation": "*",
 		"nikic/fast-route": "*",
     "ramsey/uuid": "*",
     "rdlowrey/auryn": "*",

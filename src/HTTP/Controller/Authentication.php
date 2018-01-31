@@ -2,7 +2,7 @@
 
 	namespace HTTP\Controller;
 
-	use Domain\Service\HTTP\HTTPAuthenticationService;
+	use Domain\Service\HTTP\HTTPAuthenticationService
 
 	class Authentication
 	{
@@ -14,6 +14,10 @@
 		}
 		function attemptLogin() {
 			$this->authenticationService->login();
+			header("Location: login/success");
+		}
+		function loginSuccess() {
+			return;
 		}
 		function logout() {
 			$this->authenticationService->logout();
