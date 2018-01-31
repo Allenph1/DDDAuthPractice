@@ -9,12 +9,12 @@
 	/////////////////////////
 
 	$pdo = new PDO(
-		"mysql:dbname=ahundley_800contacts_dev;host=db.inetz.com",
-		"800contacts_dev",
-		"Ghaunrow-ojDyag6"
+		"mysql:dbname=;host=",
+		"username",
+		"password"
 	);
 	$request = Request::createFromGlobals();
-	
+
 	////////////////////////////////////
 	// Aggregate Agnostic Definitions //
 	////////////////////////////////////
